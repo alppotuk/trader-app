@@ -24,7 +24,6 @@ public class OrderService {
 
         order.setSymbol(createOrderDto.getSymbol());
         order.setSide(createOrderDto.getSide());
-        order.setOpeningPrice(createOrderDto.getOpeningPrice());
         order.setBalanceAmount(createOrderDto.getBalanceAmount());
         order.setQuantity(createOrderDto.getQuantity());
         order.setLeverage(createOrderDto.getLeverage());

@@ -20,9 +20,6 @@ public class Order {
     private Side side;
 
     @Column(nullable = false)
-    private Double openingPrice;
-
-    @Column(nullable = false)
     private Double balanceAmount;
 
     @Column(nullable = false)
@@ -69,14 +66,6 @@ public class Order {
 
     public void setSide(Side side) {
         this.side = side;
-    }
-
-    public Double getOpeningPrice() {
-        return openingPrice;
-    }
-
-    public void setOpeningPrice(Double openingPrice) {
-        this.openingPrice = openingPrice;
     }
 
     public Double getBalanceAmount() {

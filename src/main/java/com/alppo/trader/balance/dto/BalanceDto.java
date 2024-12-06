@@ -6,11 +6,21 @@ import java.time.LocalDateTime;
 
 public class BalanceDto {
     private Double balance;
+    private Double pnl;
     private LocalDateTime dateTime;
 
     public BalanceDto(Trade trade){
         this.balance  = trade.getClosingOrder().getBalanceAmount();
         this.dateTime = trade.getClosingOrder().getCreatedAt();
+        this.pnl     = trade.getPnl();
+    }
+
+    public Double getPnl() {
+        return pnl;
+    }
+
+    public void setPnl(Double pnl) {
+        this.pnl = pnl;
     }
 
     public Double getBalance() {

@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 public class CreateOrderDto {
     private String symbol;
     private Order.Side side;
-    private Double openingPrice;
     private Double balanceAmount;
     private Double quantity;
     private Integer leverage;
@@ -27,13 +26,6 @@ public class CreateOrderDto {
         this.side = side;
     }
 
-    public Double getOpeningPrice() {
-        return openingPrice;
-    }
-
-    public void setOpeningPrice(Double openingPrice) {
-        this.openingPrice = openingPrice;
-    }
 
     public Double getBalanceAmount() {
         return balanceAmount;
