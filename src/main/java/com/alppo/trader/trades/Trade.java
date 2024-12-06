@@ -2,6 +2,10 @@ package com.alppo.trader.trades;
 
 import com.alppo.trader.orders.Order;
 import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "trades")
@@ -27,8 +31,27 @@ public class Trade {
     @Column(nullable = false)
     private Double pnl; // profit & loss
 
-    public Trade(){
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
+    public Trade(){
+    }
+
+    public Trade(Order openingOrder, Order closingOrder){
+        this.openingOrder = openingOrder;
+        this.closingOrder = closingOrder;
+        this.quantity = openingOrder.getQuantity();
+        this.leverage = openingOrder.getLeverage();
+        this.pnl = closingOrder.getBalanceAmount() - openingOrder.getBalanceAmount();
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
