@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading Balance Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="dashboard">
+    <div class="tab-container">
+        <div class="tab active" onclick="switchTab('balance')">Balance Graph</div>
+        <div class="tab" onclick="switchTab('pnl')">PnL Graph</div>
+    </div>
+
+    <div class="graph-container">
+        <canvas id="tradeChart"></canvas>
+    </div>
+
+    <div class="table-controls">
+        <label for="pageSize">Time Period:</label>
+        <select id="pageSize" class="modern-dropdown" onchange="fetchData()">
+            <option value="12">Hour</option>
+            <option value="72">6 Hours</option>
+            <option value="288">Day</option>
+            <option value="2016">Week</option>
+            <option value="8064">Month</option>
+        </select>
+    </div>
+
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

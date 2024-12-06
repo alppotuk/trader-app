@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,10 +19,15 @@ public class BalanceService {
         this.tradeRepository = tradeRepository;
     }
 
-    public Page<BalanceDto> getBalances(int index, int size){
-        Pageable pageable = PageRequest.of(index, size);
+    public Page<BalanceDto> getBalances(int index, int size) {
+        Pageable pageable = PageRequest.of(index, size, Sort.by("closingOrder.createdAt").descending());
         Page<Trade> tradesPage = tradeRepository.findAll(pageable);
+        return tradesPage.map(BalanceDto::new);
+    }
 
+    public Page<BalanceDto> getAllBalances() {
+        Pageable pageable = PageRequest.of(0, Integer.MAX_VALUE, Sort.by("closingOrder.createdAt").descending());
+        Page<Trade> tradesPage = tradeRepository.findAll(pageable);
         return tradesPage.map(BalanceDto::new);
     }
 }

@@ -23,7 +23,13 @@ public class BalanceController {
     @GetMapping
     public Page<BalanceDto> getBalances(
             @RequestParam(defaultValue = "0") int index,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size
+    ) {
         return balanceService.getBalances(index, size);
+    }
+
+    @GetMapping("/all")
+    public Page<BalanceDto> getAllBalances() {
+        return balanceService.getAllBalances();
     }
 }
