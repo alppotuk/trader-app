@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mysql:
@@ -16,7 +16,17 @@ services:
     networks:
       - app-network
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-ppassword" ]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "trader_app_user",
+          "-ptrader_app_password",
+        ]
       interval: 10s
       timeout: 5s
       retries: 6
@@ -24,7 +34,7 @@ services:
 
   springboot:
     build:
-      context: .
+      context: ./spring-backend
       dockerfile: Dockerfile
     container_name: springboot-app
     environment:
@@ -37,6 +47,20 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    networks:
+      - app-network
+
+  python-service:
+    build:
+      context: ./python-scripts
+      dockerfile: Dockerfile
+    container_name: python-service
+    volumes:
+      - ./python-scripts:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - springboot
     networks:
       - app-network
 

@@ -19,6 +19,9 @@ target/
 *.iml
 *.ipr
 
+### Python Scripts ###
+*.env
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

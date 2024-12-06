@@ -1,17 +1,22 @@
 let currentPage = 0;
 let chart;
 
+function formatDate(date) {
+    const d = new Date(date);
+    const day = d.getDate().toString().padStart(2, '0');
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const year = d.getFullYear().toString().slice(-2);
+    const hours = d.getHours().toString().padStart(2, '0');
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+
+    return `${day}.${month}.${year} | ${hours}:${minutes}`;
+}
 
 function switchTab(type) {
     const tabs = document.querySelectorAll('.tab');
     tabs.forEach(tab => tab.classList.remove('active'));
     event.target.classList.add('active');
     fetchData(type);
-}
-
-function toggleTableVisibility() {
-    const tableContainer = document.getElementById('tableContainer');
-    tableContainer.classList.toggle('visible');
 }
 
 function fetchData(type = 'balance') {
@@ -22,14 +27,12 @@ function fetchData(type = 'balance') {
             const data = response.data;
             const reversedContent = [...data.content].reverse();
             updateChart(reversedContent, type);
-            updatePagination(data);
+            updateControls(data, reversedContent);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
 }
-
-
 
 function updateChart(balances, type) {
     const ctx = document.getElementById('tradeChart').getContext('2d');
@@ -39,14 +42,14 @@ function updateChart(balances, type) {
     }
 
     const rootStyles = getComputedStyle(document.documentElement);
-        const borderColor = rootStyles.getPropertyValue(
-            type === 'balance' ? '--chart-balance-line' : '--chart-pnl-line'
-        ).trim();
-        const pointColor = rootStyles.getPropertyValue(
-            type === 'balance' ? '--chart-balance-dot' : '--chart-pnl-dot'
-        ).trim();
+    const borderColor = rootStyles.getPropertyValue(
+        type === 'balance' ? '--chart-balance-line' : '--chart-pnl-line'
+    ).trim();
+    const pointColor = rootStyles.getPropertyValue(
+        type === 'balance' ? '--chart-balance-dot' : '--chart-pnl-dot'
+    ).trim();
 
-    const labels = balances.map(b => new Date(b.dateTime).toLocaleString());
+    const labels = balances.map(b => formatDate(b.dateTime));
     const values = type === 'balance'
         ? balances.map(b => b.balance)
         : balances.map(b => b.pnl);
@@ -69,15 +72,35 @@ function updateChart(balances, type) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-
+            scales: {
+                x: {
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 10
+                    }
+                }
+            }
         }
     });
 }
 
-function updatePagination(data) {
-    document.getElementById('pageInfo').textContent = `Page ${data.number + 1}`;
-    document.getElementById('prevPage').disabled = data.first;
-    document.getElementById('nextPage').disabled = data.last;
+function updateControls(data, balances) {
+    // Update date range display
+    const dateRangeElement = document.getElementById('dateRange');
+    if (balances.length > 0) {
+        const startDate = formatDate(balances[0].dateTime);
+        const endDate = formatDate(balances[balances.length - 1].dateTime);
+        dateRangeElement.textContent = `${startDate} - ${endDate}`;
+    } else {
+        dateRangeElement.textContent = 'No data available';
+    }
+
+    // Update pagination buttons
+    const prevButton = document.getElementById('prevPage');
+    const nextButton = document.getElementById('nextPage');
+
+    prevButton.disabled = data.first;
+    nextButton.disabled = data.last;
 }
 
 function changePage(direction) {

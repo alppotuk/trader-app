@@ -18,6 +18,16 @@
         <canvas id="tradeChart"></canvas>
     </div>
 
+    <div class="chart-controls">
+        <button id="prevPage" onclick="changePage(-1)" class="nav-button">
+            <img src="assets/arrow-left.png" alt="Previous" class="nav-icon">
+        </button>
+        <div id="dateRange" class="date-range">Loading...</div>
+        <button id="nextPage" onclick="changePage(1)" class="nav-button">
+            <img src="assets/arrow-right.png" alt="Next" class="nav-icon">
+        </button>
+    </div>
+
     <div class="table-controls">
         <label for="pageSize">Time Period:</label>
         <select id="pageSize" class="modern-dropdown" onchange="fetchData()">
@@ -33,5 +43,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
