@@ -6,13 +6,16 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "trades")
 public class Trade {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "order_id")
+    @OneToOne
+    @JoinColumn(name = "opening_order_id", referencedColumnName = "id", nullable = false)
     private Order openingOrder;
 
-    @JoinColumn(name = "order_id")
+    @OneToOne
+    @JoinColumn(name = "closing_order_id", referencedColumnName = "id", nullable = false)
     private Order closingOrder;
 
     @Column(nullable = false)
