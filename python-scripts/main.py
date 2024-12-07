@@ -27,10 +27,10 @@ session = HTTP(
 
 
 # Trading parameters
-SYMBOL = "DOGEUSDT"  # DOGE is volatile and has low price
+SYMBOL = "BTCUSDT"  # DOGE is volatile and has low price
 CLOSE_TIMEOUT = 300  # 5 minute in seconds
-LEVERAGE = 1
-QTY=12
+LEVERAGE = 10
+QTY=0.001
 
 def get_account_balance():
     """Get current account balance in USDT"""
