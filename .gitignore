@@ -22,6 +22,8 @@ target/
 ### Python Scripts ###
 *.env
 
+*.pem
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
