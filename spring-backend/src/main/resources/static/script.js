@@ -99,13 +99,18 @@ function updateControls(data, balances) {
     const prevButton = document.getElementById('prevPage');
     const nextButton = document.getElementById('nextPage');
 
-    prevButton.disabled = data.first;
-    nextButton.disabled = data.last;
+    prevButton.disabled = data.last;
+    nextButton.disabled = data.first;
 }
 
 function changePage(direction) {
     currentPage += direction;
     fetchData(document.querySelector('.tab.active').textContent.split(' ')[0].toLowerCase());
+}
+
+function onPageSizeChange(){
+    currentPage = 0;
+    fetchData()
 }
 
 fetchData();

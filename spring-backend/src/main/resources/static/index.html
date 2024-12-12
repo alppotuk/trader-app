@@ -19,18 +19,18 @@
     </div>
 
     <div class="chart-controls">
-        <button id="prevPage" onclick="changePage(-1)" class="nav-button">
+        <button id="prevPage" onclick="changePage(1)" class="nav-button">
             <img src="assets/arrow-left.png" alt="Previous" class="nav-icon">
         </button>
         <div id="dateRange" class="date-range">Loading...</div>
-        <button id="nextPage" onclick="changePage(1)" class="nav-button">
+        <button id="nextPage" onclick="changePage(-1)" class="nav-button">
             <img src="assets/arrow-right.png" alt="Next" class="nav-icon">
         </button>
     </div>
 
     <div class="table-controls">
         <label for="pageSize">Time Period:</label>
-        <select id="pageSize" class="modern-dropdown" onchange="fetchData()">
+        <select id="pageSize" class="modern-dropdown" onchange="onPageSizeChange()">
             <option value="12">Hour</option>
             <option value="72">6 Hours</option>
             <option value="288">Day</option>
